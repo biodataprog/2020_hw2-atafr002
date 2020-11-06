@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
+from __future__ import division
+
 import os, gzip, itertools
 
-# this is code which will parse FASTA files
-# define what a header looks like in FASTA format
 def isheader(line):
     return line[0] == '>'
 
@@ -30,9 +30,86 @@ if not os.path.exists(file2):
     os.system("curl -O %s"%(url2))
 
 with gzip.open(file1,"rt") as fh:
-    seqs = aspairs(fh)
+	seqs = aspairs(fh)
+	
+	total_genes1 = 0 
+	gene_length1 = 0
+	G1 = 0
+	C1 = 0
+	codon1 = 0
+	codon1_dict = {'TTT':0 , 'TTC': 0, 'TTA' : 0, 'TTG' : 0, 'CTT': 0, 'CTC': 0, 'CTA': 0, 'CTG': 0,'ATT': 0,
+'ATC': 0,'ATA': 0,'ATG': 0,'GTT': 0,'GTC': 0,'GTA': 0,'GTG': 0,'TCT': 0,'TCC': 0,'TCA': 0,'TCG': 0,'CCT': 0,'CCC': 0,
+'CCA': 0,'CCG': 0,'ACT': 0,'ACC': 0,'ACA': 0,'ACG': 0,'GCT': 0,'GCC': 0,'GCA': 0,'GCG': 0,'TAT': 0,'TAC': 0,'TAA': 0,
+'TAG': 0,'CAT': 0,'CAC': 0,'CAA': 0,'CAG': 0,'AAT': 0,'AAC': 0,'AAA': 0,'AAG': 0,'GAT': 0,'GAC': 0,'GAA': 0,'GAG': 0,
+'TGT': 0,'TGC': 0,'TGA': 0,'TGG': 0,'CGT': 0,'CGC': 0,'CGA': 0,'CGG': 0,'AGT': 0,'AGC': 0,'AGA': 0,'AGG': 0,'GGT': 0,
+'GGC': 0,'GGA': 0,'GGG': 0, }
+        for seq in seqs:
+	  seqname  = seq[0]
+	  seqstring= seq[1]
 
-    for seq in seqs:
-        seqname  = seq[0]
-        seqstring= seq[1]
-        print(seqname, " first 10 bases are ", seqstring[0:10])
+          for nucleotide in seqstring:
+		if nucleotide is "G":
+             	     G1 += 1
+		if nucleotide is "C":
+                     C1 += 1
+		else:
+                     continue
+
+	  for nucleotide in range(1,len(seqstring)+1):
+		if nucleotide > 0 and nucleotide % 3 == 0:
+		     codon1 += 1
+		else:
+		     continue
+
+	  total_genes1 += 1
+	  gene_length1 += len(seqstring)
+	  
+	  for i in range(0,len(gene_length1),3):
+	
+
+		
+with gzip.open(file2, "rt") as f:
+	seqs = aspairs(f)
+	
+	total_genes2 = 0
+	gene_length2 = 0
+	G2 = 0
+	C2 = 0
+	codon2 = 0
+	for seq in seqs:
+	  seqname = seq[0]
+	  seqstring= seq[1]
+	
+	  for nucleotide in seqstring:
+		if nucleotide is "G":
+		     G2 += 1
+		if nucleotide is "C":
+		     C2 += 1
+		else:
+		     continue
+
+ 	  for nucleotide in range(1,len(seqstring)+1):
+		if nucleotide > 0 and nucleotide % 3 == 0:
+		     codon2 += 1
+		else:
+		     continue
+
+	  total_genes2 += 1
+	  gene_length2 += len(seqstring)
+
+print("\n Question3_Part1")
+print("Total number of genes for Salmonella enterica: %d" %(total_genes1))
+print("Total number of genes for Mycobacterium tuberculosis: %d" %(total_genes2))   
+
+
+print("\n Question3_Part2")
+print("Total length of genes for Salmonella enterica: %d" %(gene_length1))
+print("Total length of genes for Mycobacterium tuberculosis: %d" %(gene_length2))
+
+print("\n Question3_Part3")
+print("The G+C percentage for the whole dataset: %f" %((G1 + C1 + G2 + C2)/(gene_length1 + gene_length2)*100))
+
+print("\n Question3_Part4")
+print("Total number of codons in Salmonella enterica's genome: %d" %(codon1))
+print("Total number of codons in Mycobacterium tuberculosis's genome: %d" %(codon2))
+
