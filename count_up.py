@@ -19,7 +19,7 @@ def aspairs(f):
             line = next(group)
             seq_id = line[1:].split()[0]
         else:
-            sequence = ''.join(line.strip() for line in group)
+            sequence = b''.join(line.strip() for line in group)
             yield seq_id, sequence
 
 
