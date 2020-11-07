@@ -114,5 +114,5 @@ print("Total number of codons in Mycobacterium tuberculosis's genome: %d" %((gen
 print("\n Question3_Part5")
 
 for k,v in codon1_dict.items():
-	print(k + "\t\t" + str(codon1_dict[k]) + "\t\t" + str(codon2_dict[k]))
+	print(k + "\t|\t" + str(codon1_dict[k]) + "\t|\t" + str(codon2_dict[k]) + "\n --------------------------------------")
 
