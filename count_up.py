@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 
-from __future__ import division
-
 gff="Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.37.gff3.gz"
 fasta="Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.dna.chromosome.Chromosome.fa.gz"
 
@@ -39,7 +37,7 @@ with gzip.open(fasta,"r") as f:
     print("Chromosome length is: %d " %(ch_length)) 
 
 
-gene_count = 0    
+gene_count = 0
 sum_length = 0
 CDS_length = 0
 
